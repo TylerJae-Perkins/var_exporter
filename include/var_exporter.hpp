@@ -8,13 +8,13 @@ namespace n_var_exporter {
 		inline std::unordered_map<std::string, std::variant<int, float, bool, std::string>> values;
 	}
 
-	template <class T>
+	template <typename T>
 	T get(std::string_view key) {
 		return std::get<T>(n_detail::values[key.data()]);
 	}
 	
 	template<typename T>
-	void set(std::string_view key, T value) {
+	void set(std::string_view key, const T& value) {
 		n_detail::values[key.data()] = value;
 	}
 
@@ -25,8 +25,5 @@ namespace n_var_exporter {
 #define ADD(type, name, value) \
 	n_var_exporter::set<type>(name, value);
 
-#define SAVE(file_name) \
-	n_var_exporter::save(file_name);
-
-#define LOAD(file_name) \
-	n_var_exporter::load(file_name);
+#define GET(type, name) \
+	n_var_exporter::get<type>(name)

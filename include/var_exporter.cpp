@@ -10,35 +10,39 @@ void n_var_exporter::save(std::string_view file_name) {
 	if (file.extension() != ".cfg")
 		file.replace_extension(".cfg");
 
-	CHAR buffer[MAX_PATH] = { 0 };
-	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
-	std::string file_path = std::string(buffer).substr(0, pos);
+	char folder_buffer[MAX_PATH] = { 0 };
+	if (GetModuleFileNameA(NULL, folder_buffer, MAX_PATH) == 0)
+		printf("failed to save file {GetModuleFileNameA} \n");
+
+	std::string::size_type last_backspace_pos = std::string(folder_buffer).find_last_of("\\/");
+	std::string file_path = std::string(folder_buffer).substr(0, last_backspace_pos);
 
 	std::filesystem::path path = file_path / file;
 
 	std::ofstream stream_file;
-	stream_file.open(path, std::ios::out | std::ios::trunc);
+	stream_file.open(path, std::ios::trunc);
 
-	if (!stream_file.good())
+	if (!stream_file.good()) {
+		printf("failed to save file {stream_file.good} \n");
 		return;
+	}
 
-	for (auto& data : n_detail::values) {
-		std::visit([&](std::variant<int, float, bool, std::string>&& arg) {
-			if (std::holds_alternative<int>(arg)) {
-				int value = std::get<int>(arg);
+	for (std::pair<const std::string, std::variant<int, float, bool, std::string>>& data : n_detail::values) {
+		std::visit([&](std::variant<int, float, bool, std::string>&& data_variant) {
+			if (std::holds_alternative<int>(data_variant)) {
+				int value = std::get<int>(data_variant);
 				stream_file << "int; " << data.first.data() << ": " << std::to_string(value) << "\n";
 			}
-			else if (std::holds_alternative<float>(arg)) {
-				float value = std::get<float>(arg);
+			else if (std::holds_alternative<float>(data_variant)) {
+				float value = std::get<float>(data_variant);
 				stream_file << "float; " << data.first.data() << ": " << std::to_string(value) << "\n";
 			}
-			else if (std::holds_alternative<bool>(arg)) {
-				bool value = std::get<bool>(arg);
+			else if (std::holds_alternative<bool>(data_variant)) {
+				bool value = std::get<bool>(data_variant);
 				stream_file << "bool; " << data.first.data() << ": " << std::to_string(value) << "\n";
 			}
-			else if (std::holds_alternative<std::string>(arg)) {
-				std::string_view value = std::get<std::string>(arg);
+			else if (std::holds_alternative<std::string>(data_variant)) {
+				std::string_view value = std::get<std::string>(data_variant);
 				stream_file << "string; " << data.first.data() << ": " << value << "\n";
 			}
 		}, data.second);
@@ -53,19 +57,23 @@ void n_var_exporter::load(std::string_view file_name) {
 	if (file.extension() != ".cfg")
 		file.replace_extension(".cfg");
 
-	CHAR buffer[MAX_PATH] = { 0 };
-	GetModuleFileNameA(NULL, buffer, MAX_PATH);
-	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
-	std::string file_path = std::string(buffer).substr(0, pos);
+	char folder_buffer[MAX_PATH] = { 0 };
+	if (GetModuleFileNameA(NULL, folder_buffer, MAX_PATH) == 0)
+		printf("failed to load file {GetModuleFileNameA} \n");
+
+	std::string::size_type last_backspace_pos = std::string(folder_buffer).find_last_of("\\/");
+	std::string file_path = std::string(folder_buffer).substr(0, last_backspace_pos);
 
 	std::filesystem::path path = file_path / file;
 
 	std::ifstream stream_file;
 
-	stream_file.open(path, std::ios::out | std::ios::in);
+	stream_file.open(path, std::ios::in);
 
-	if (!stream_file.good())
+	if (!stream_file.good()) {
+		printf("failed to load file {stream_file.good} \n");
 		return;
+	}
 
 	for (std::string line; std::getline(stream_file, line); ) {
 		std::string value = line;

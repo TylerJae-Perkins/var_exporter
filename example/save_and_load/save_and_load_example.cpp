@@ -8,7 +8,7 @@ void call_save() {
     ADD(float, "float_example", 521.f);
     ADD(std::string, "string_example", "string_example");
 
-    SAVE("test");
+    n_var_exporter::save("test");
 }
 
 void call_clear() {
@@ -19,13 +19,18 @@ void call_clear() {
 }
 
 void call_load() {
-    LOAD("test");
+    n_var_exporter::load("test");
 
-    std::cout << "bool_example " << n_var_exporter::get<bool>("bool_example") << "\n";
-    std::cout << "float_example " << n_var_exporter::get<float>("float_example") << "\n";
-    std::cout << "int_example " << n_var_exporter::get<int>("int_example") << "\n";
-    std::cout << "string_example " << n_var_exporter::get<std::string>("string_example") << "\n";
+    std::cout << "bool_example " << GET(bool, "bool_example") << "\n";
+    std::cout << "float_example " << GET(float, "float_example") << "\n";
+    std::cout << "int_example " << GET(int, "int_example") << "\n";
+    std::cout << "string_example " << GET(std::string, "string_example") << "\n";
     std::cout << "values_size " << n_var_exporter::n_detail::values.size() << "\n";
+
+
+    if (GET(bool, "bool_example")) {
+        std::cout << "bool_example " << GET(bool, "bool_example") << "\n";
+    }
 }
 
 int main() {
