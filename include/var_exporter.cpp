@@ -49,7 +49,9 @@ void n_var_exporter::save(std::string_view file_name) {
 	}
 	stream_file.close();
 
+#ifdef _DEBUG
 	printf("saved file %s \n", file_name.data());
+#endif
 }
 
 void n_var_exporter::load(std::string_view file_name) {
@@ -116,5 +118,7 @@ void n_var_exporter::load(std::string_view file_name) {
 
 	stream_file.close();
 
+#ifdef _DEBUG
 	printf("loaded file %s \n", file_name.data());
+#endif
 }
