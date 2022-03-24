@@ -18,7 +18,7 @@ void n_var_exporter::save(std::string_view file_name) {
 
 	char folder_buffer[MAX_PATH] = { 0 };
 	if (GetModuleFileNameA(NULL, folder_buffer, MAX_PATH) == 0)
-		printf("failed to save file {GetModuleFileNameA} \n");
+		LOG("failed to save file {GetModuleFileNameA} \n");
 
 	std::string::size_type last_backspace_pos = std::string(folder_buffer).find_last_of("\\/");
 	std::string file_path = std::string(folder_buffer).substr(0, last_backspace_pos);
@@ -29,7 +29,7 @@ void n_var_exporter::save(std::string_view file_name) {
 	stream_file.open(path, std::ios::trunc);
 
 	if (!stream_file.good()) {
-		printf("failed to save file {stream_file.good} \n");
+		LOG("failed to save file {stream_file.good} \n");
 		return;
 	}
 
@@ -65,7 +65,7 @@ void n_var_exporter::load(std::string_view file_name) {
 
 	char folder_buffer[MAX_PATH] = { 0 };
 	if (GetModuleFileNameA(NULL, folder_buffer, MAX_PATH) == 0)
-		printf("failed to load file {GetModuleFileNameA} \n");
+		LOG("failed to load file {GetModuleFileNameA} \n");
 
 	std::string::size_type last_backspace_pos = std::string(folder_buffer).find_last_of("\\/");
 	std::string file_path = std::string(folder_buffer).substr(0, last_backspace_pos);
@@ -77,7 +77,7 @@ void n_var_exporter::load(std::string_view file_name) {
 	stream_file.open(path, std::ios::in);
 
 	if (!stream_file.good()) {
-		printf("failed to load file {stream_file.good} \n");
+		LOG("failed to load file {stream_file.good} \n");
 		return;
 	}
 
