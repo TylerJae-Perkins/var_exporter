@@ -1,5 +1,5 @@
 #include <iostream>
-#include "var_exporter/var_exporter.hpp"
+#include "include/var_exporter.hpp"
 #include <Windows.h>
 
 void call_save() {
@@ -28,8 +28,7 @@ void call_load() {
     std::cout << "values_size " << n_var_exporter::n_detail::values.size() << "\n";
 }
 
-int main()
-{
+int main() {
     while (true) {
         if ((GetAsyncKeyState('V') & 1)) {
             call_save();
