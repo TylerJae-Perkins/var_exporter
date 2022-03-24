@@ -6,7 +6,7 @@ void call_save() {
     ADD(bool, "bool_example", true);
     ADD(int, "integer_example", 110);
     ADD(float, "float_example", 521.f);
-    ADD(std::string, "string_example", "sexy beast");
+    ADD(std::string, "string_example", "string_example");
 
     SAVE("test");
 }
