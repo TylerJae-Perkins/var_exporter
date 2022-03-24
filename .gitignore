@@ -34,3 +34,12 @@
 *.log
 *.idb
 *.pdb
+*.ipch
+*.db
+example/.vs/save_and_load/v16/.suo
+*.db-shm
+*.db-wal
+*.opendb
+*.recipe
+*.ilk
+*.cfg

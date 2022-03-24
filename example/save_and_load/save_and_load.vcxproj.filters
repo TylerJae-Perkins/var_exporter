@@ -21,12 +21,12 @@
     <ClCompile Include="save_and_load_example.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="var_exporter.cpp">
+    <ClCompile Include="var_exporter\var_exporter.cpp">
       <Filter>Header Files\var_exporter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="var_exporter.hpp">
+    <ClInclude Include="var_exporter\var_exporter.hpp">
       <Filter>Header Files\var_exporter</Filter>
     </ClInclude>
   </ItemGroup>
