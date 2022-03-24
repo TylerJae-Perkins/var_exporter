@@ -3,10 +3,10 @@
 #include <Windows.h>
 
 void call_save() {
-    ADD(bool, "bool_example", true);
-    ADD(int, "integer_example", 110);
-    ADD(float, "float_example", 521.f);
-    ADD(std::string, "string_example", "string_example");
+    SET(bool, "bool_example", true);
+    SET(int, "integer_example", 110);
+    SET(float, "float_example", 521.f);
+    SET(std::string, "string_example", "string_example");
 
     n_var_exporter::save("test");
 }

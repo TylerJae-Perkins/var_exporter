@@ -22,7 +22,7 @@ namespace n_var_exporter {
 	void load(std::string_view file_name);
 }
 
-#define ADD(type, name, value) \
+#define SET(type, name, value) \
 	n_var_exporter::set<type>(name, value);
 
 #define GET(type, name) \

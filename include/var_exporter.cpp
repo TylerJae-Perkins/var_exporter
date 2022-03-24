@@ -1,3 +1,9 @@
+#ifdef SHOULD_LOG
+#define LOG(str, ...) printf(str, __VA_ARGS__)
+#else
+#define LOG(str) 
+#endif
+
 #include "var_exporter.hpp"
 
 #include <shlobj.h>
@@ -49,9 +55,7 @@ void n_var_exporter::save(std::string_view file_name) {
 	}
 	stream_file.close();
 
-#ifdef _DEBUG
-	printf("saved file %s \n", file_name.data());
-#endif
+	LOG("saved file %s \n", file_name.data());
 }
 
 void n_var_exporter::load(std::string_view file_name) {
@@ -118,7 +122,5 @@ void n_var_exporter::load(std::string_view file_name) {
 
 	stream_file.close();
 
-#ifdef _DEBUG
-	printf("loaded file %s \n", file_name.data());
-#endif
+	LOG("loaded file %s \n", file_name.data());
 }
