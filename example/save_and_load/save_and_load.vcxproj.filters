@@ -35,5 +35,8 @@
     <ClInclude Include="..\..\include\var_exporter.hpp">
       <Filter>Header Files\var_exporter</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\hasher.hpp">
+      <Filter>Header Files\var_exporter</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #endif
 
 #include "var_exporter.hpp"
+#include "hasher.hpp"
 
 #include <shlobj.h>
 #include <filesystem>
@@ -97,23 +98,31 @@ void n_var_exporter::load(std::string_view file_name) {
 		colon_pos = value.find(":");
 		value.erase(colon_pos, value.size() - 1);
 
-		if (datatype == "int") {
-			int int_value = std::stoi(variable);
-			set<int>(value, int_value);
+		switch (FNV1A(datatype)) {
+			case CT_HASH("int"):
+			{
+				int int_value = std::stoi(variable);
+				set<int>(value, int_value);
+				break;
+			}
+			case CT_HASH("float"):
+			{
+				float float_value = std::stof(variable);
+				set<float>(value, float_value);
+				break;
+			}
+			case CT_HASH("bool"):
+			{
+				int int_value = std::stoi(variable);
+				set<bool>(value, int_value);
+				break;
+			}
+			case CT_HASH("string"):
+			{
+				set<std::string>(value, variable);
+				break;
+			}
 		}
-
-		if (datatype == "float") {
-			float float_value = std::stof(variable);
-			set<float>(value, float_value);
-		}
-
-		if (datatype == "bool") {
-			int int_value = std::stoi(variable);
-			set<bool>(value, int_value);
-		}
-
-		if (datatype == "string")
-			set<std::string>(value, variable);
 
 		datatype.clear();
 		variable.clear();
