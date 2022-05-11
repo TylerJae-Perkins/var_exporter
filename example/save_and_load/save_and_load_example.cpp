@@ -18,6 +18,13 @@ void call_clear() {
     printf("cleared unordered map \n");
 }
 
+void create_variables() {
+    SET(bool, "bool_example", false);
+    SET(int, "integer_example", 0);
+    SET(float, "float_example", 0.f);
+    SET(std::string, "string_example", "empty");
+}
+
 void call_load() {
     n_var_exporter::load("test");
 
@@ -34,6 +41,8 @@ void call_load() {
 }
 
 int main() {
+    create_variables(); //add variables to map (requires being called once upon initialisation)
+
     while (true) {
         if ((GetAsyncKeyState('V') & 1)) {
             call_save();
